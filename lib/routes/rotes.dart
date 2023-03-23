@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 final Map<String,Widget Function(BuildContext)> appRotes = {
 'usuarios': (_) =>const UsersPage(),
-'chat': (_) =>const ChatPage(),
+'chat': (_) => ChatPage(),
 'login': (_) => LoginPage(),
 'register': (_) => RegisterPage(),
 'loading': (_) =>const LoadingPage(),

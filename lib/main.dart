@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'chat',
-      initialRoute: 'login',
+      initialRoute: 'chat',
       routes: appRotes,
       home: Scaffold(
         appBar: AppBar(
