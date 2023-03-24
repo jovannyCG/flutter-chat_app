@@ -1,8 +1,10 @@
+import 'package:chat/services/auth_service.dart';
 import 'package:chat/widgets/button_blue.dart';
 import 'package:chat/widgets/labels.dart';
 import 'package:chat/widgets/logo.dart';
 import 'package:chat/widgets/text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   final emailCtrl = TextEditingController();
@@ -35,8 +37,14 @@ class LoginPage extends StatelessWidget {
                   textcontroler: passCtrl,
                   isPassword: true,
                 ),
-                const ButtonBlue(
-                  text: 'Ingresa',
+                ButtonBlue(
+                  text: 'Ingresa', 
+                  pressed: () {  
+                     // final authService =Provider.of<AuthService>(context, listen: false);
+                     // authService.login( emailCtrl.text, passCtrl.text);
+                     print(emailCtrl.text);
+                      print(passCtrl.text);
+                  },
                 ),
                 const Labels(ruta: 'register', title: '¿No tienes cuenta?',subtitle: 'Crea una ahora',),
                 const Text('Términos y condiciones de uso',

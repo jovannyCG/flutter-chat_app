@@ -35,7 +35,7 @@ class TextInput extends StatelessWidget {
               child:  TextField(
                 autocorrect: false,
                 keyboardType: keyboardType,
-                obscureText: isPassword,
+                obscureText: false,
                 decoration: InputDecoration(
                   prefixIcon: Icon(icon),
                   focusedBorder: InputBorder.none,

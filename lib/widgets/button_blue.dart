@@ -1,9 +1,11 @@
+
 import 'package:flutter/material.dart';
 
 class ButtonBlue extends StatelessWidget {
   final String text;
-  //final Function pressed;
-  const ButtonBlue({Key? key, required this.text,})
+  
+  final void Function()? pressed;
+  const ButtonBlue({Key? key, required this.text, this.pressed, })
       : super(key: key);
 
   @override
@@ -14,7 +16,7 @@ class ButtonBlue extends StatelessWidget {
       width: double.infinity,
       child: Center(
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: pressed,
           child:  Center(
             child: Text(
               text,

@@ -34,12 +34,12 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
         elevation: 1,
         title: Column(children: [
           CircleAvatar(
+            backgroundColor: Colors.blue[100],
+            maxRadius: 14,
             child: const Text('Te',
                 style: TextStyle(
                   fontSize: 12,
                 )),
-            backgroundColor: Colors.blue[100],
-            maxRadius: 14,
           ),
           const SizedBox(
             height: 3,
