@@ -6,13 +6,27 @@ import 'package:chat/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final emailCtrl = TextEditingController();
   final passCtrl = TextEditingController();
-  LoginPage({Key? key}) : super(key: key);
+
+  @override
+  void dispose() {
+    emailCtrl.dispose();
+    passCtrl.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -38,15 +52,18 @@ class LoginPage extends StatelessWidget {
                   isPassword: true,
                 ),
                 ButtonBlue(
-                  text: 'Ingresa', 
-                  pressed: () {  
-                     // final authService =Provider.of<AuthService>(context, listen: false);
-                     // authService.login( emailCtrl.text, passCtrl.text);
-                     print(emailCtrl.text);
-                      print(passCtrl.text);
+                  text: 'Ingresa',
+                  pressed: () {
+                   authService.login(emailCtrl.text, passCtrl.text);
+                    //print(emailCtrl.text);
+                     //print(passCtrl.text);
                   },
                 ),
-                const Labels(ruta: 'register', title: '¿No tienes cuenta?',subtitle: 'Crea una ahora',),
+                const Labels(
+                  ruta: 'register',
+                  title: '¿No tienes cuenta?',
+                  subtitle: 'Crea una ahora',
+                ),
                 const Text('Términos y condiciones de uso',
                     style: TextStyle(
                         color: Colors.blue, fontWeight: FontWeight.w300)),

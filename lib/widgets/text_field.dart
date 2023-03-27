@@ -36,6 +36,7 @@ class TextInput extends StatelessWidget {
                 autocorrect: false,
                 keyboardType: keyboardType,
                 obscureText: false,
+                controller: textcontroler,
                 decoration: InputDecoration(
                   prefixIcon: Icon(icon),
                   focusedBorder: InputBorder.none,
