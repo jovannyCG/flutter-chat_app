@@ -55,8 +55,8 @@ class _LoginPageState extends State<LoginPage> {
                   text: 'Ingresa',
                   pressed: () {
                    authService.login(emailCtrl.text, passCtrl.text);
-                    //print(emailCtrl.text);
-                     //print(passCtrl.text);
+                    print(emailCtrl.text);
+                     print(passCtrl.text);
                   },
                 ),
                 const Labels(
