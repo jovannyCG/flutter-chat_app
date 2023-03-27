@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:chat/global/enviroment.dart';
 import 'package:chat/models/login_response.dart';
 import 'package:chat/models/user.dart';
@@ -10,10 +11,22 @@ class AuthService with ChangeNotifier {
   late User user;
   bool _auth = false;
   bool get auth => _auth;
+  final _storage = const FlutterSecureStorage();
   set auth(bool value) {
     _auth = value;
     notifyListeners();
   }
+//getters del token estaticos
+static Future<String?> getToken()async{
+  final _storage = const FlutterSecureStorage();
+  final token =await _storage.read(key: 'token');
+  return token;
+}
+static Future<void> deleteToken()async{
+  final _storage = const FlutterSecureStorage();
+  await _storage.delete(key: 'token');
+  
+}
 
   Future<bool> login(String email, String password) async {
     auth = true;
@@ -30,9 +43,15 @@ class AuthService with ChangeNotifier {
     if (res.statusCode == 200) {
       final loginResponse = loginResponseFromJson(res.body);
       user = loginResponse.user;
+      await _saveToken(loginResponse.token);
       return true;
     } else {
       return false;
     }
+  }
+
+  Future _saveToken(String token)async{
+await _storage.write(key: 'token', value: token, );
+
   }
 }

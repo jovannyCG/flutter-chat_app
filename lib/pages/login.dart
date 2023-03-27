@@ -61,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                           final loginOK = await authService.login(
                               emailCtrl.text.trim(), passCtrl.text.trim());
                               if(loginOK){
-
+                                  Navigator.pushReplacementNamed(context, 'usuarios');
                               }else{
                                 showAlert(context, 'Error al iniciar sesión', 'Verifique que sus credemciales sean correctas');
                               }
