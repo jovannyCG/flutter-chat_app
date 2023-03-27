@@ -1,3 +1,4 @@
+import 'package:chat/helpers/show_alert.dart';
 import 'package:chat/services/auth_service.dart';
 import 'package:chat/widgets/button_blue.dart';
 import 'package:chat/widgets/labels.dart';
@@ -55,10 +56,15 @@ class _LoginPageState extends State<LoginPage> {
                   text: 'Ingresa',
                   pressed: authService.auth
                       ? null
-                      : () {
+                      : () async{
                         FocusScope.of(context).unfocus();
-                          authService.login(
+                          final loginOK = await authService.login(
                               emailCtrl.text.trim(), passCtrl.text.trim());
+                              if(loginOK){
+
+                              }else{
+                                showAlert(context, 'Error al iniciar sesión', 'Verifique que sus credemciales sean correctas');
+                              }
                         },
                 ),
                 const Labels(
