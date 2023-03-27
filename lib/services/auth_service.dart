@@ -7,9 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService with ChangeNotifier {
- late User user;
+  late User user;
+  bool _auth = false;
+  bool get auth => _auth;
+  set auth(bool value) {
+    _auth = value;
+    notifyListeners();
+  }
 
   Future login(String email, String password) async {
+    auth = true;
     final data = {'email': email, 'password': password};
 
     final res = await http.post(
@@ -21,7 +28,8 @@ class AuthService with ChangeNotifier {
     print(res.body);
     if (res.statusCode == 200) {
       final loginResponse = loginResponseFromJson(res.body);
-      user=loginResponse.user;
+      user = loginResponse.user;
     }
+    auth=false;
   }
 }

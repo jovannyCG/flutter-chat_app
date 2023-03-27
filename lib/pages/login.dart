@@ -53,11 +53,13 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 ButtonBlue(
                   text: 'Ingresa',
-                  pressed: () {
-                   authService.login(emailCtrl.text, passCtrl.text);
-                    print(emailCtrl.text);
-                     print(passCtrl.text);
-                  },
+                  pressed: authService.auth
+                      ? null
+                      : () {
+                        FocusScope.of(context).unfocus();
+                          authService.login(
+                              emailCtrl.text.trim(), passCtrl.text.trim());
+                        },
                 ),
                 const Labels(
                   ruta: 'register',
