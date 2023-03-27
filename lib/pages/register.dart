@@ -1,8 +1,11 @@
+import 'package:chat/helpers/show_alert.dart';
+import 'package:chat/services/auth_service.dart';
 import 'package:chat/widgets/button_blue.dart';
 import 'package:chat/widgets/labels.dart';
 import 'package:chat/widgets/logo.dart';
 import 'package:chat/widgets/text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RegisterPage extends StatelessWidget {
   final nameCtrl = TextEditingController();
@@ -12,6 +15,7 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -41,12 +45,27 @@ class RegisterPage extends StatelessWidget {
                   placeholder: 'Password',
                   textcontroler: passCtrl,
                   isPassword: true,
-
                 ),
-                const ButtonBlue(
-                  text: 'Ingresa',
+                ButtonBlue(
+                  pressed: authService.auth
+                      ? null
+                      : () async{
+                        FocusScope.of(context).unfocus();
+                        final registerOK = await  authService.register(
+                              nameCtrl.text.trim(), emailCtrl.text.trim(), passCtrl.text.trim());
+                        if(registerOK==true){
+                          Navigator.pushReplacementNamed(context, 'usuarios');
+                        }else{
+                          showAlert(context, 'no fue posible realizar el registro', registerOK );
+                        }
+                        },
+                  text: 'Crear cuenta',
                 ),
-                const Labels(ruta: 'login', title: '¿Ya tienes cuenta?', subtitle: 'Ingresa Ahora',),
+                const Labels(
+                  ruta: 'login',
+                  title: '¿Ya tienes cuenta?',
+                  subtitle: 'Ingresa Ahora',
+                ),
                 const Text('Términos y condiciones de uso',
                     style: TextStyle(
                         color: Colors.blue, fontWeight: FontWeight.w300)),
