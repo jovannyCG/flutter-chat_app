@@ -1,6 +1,7 @@
 import 'package:chat/models/user.dart';
 import 'package:chat/services/auth_service.dart';
 import 'package:chat/services/socket_service.dart';
+import 'package:chat/services/users_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -13,13 +14,20 @@ class UsersPage extends StatefulWidget {
 }
 
 class _UsersPageState extends State<UsersPage> {
+  final usersService = UsersService();
+   List<User> users = [];
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
-  final users = [
+ /* final users = [
     User(id: '1', name: 'maria', email: 'maria.com', online: true),
     User(id: '2', name: 'jose', email: 'jose.com', online: false),
     User(id: '3', name: 'Jorge', email: 'jose.com', online: true),
-  ];
+  ];*/
+  @override
+  void initState() {
+   _loadingUsers();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
@@ -92,7 +100,10 @@ class _UsersPageState extends State<UsersPage> {
   }
 
   _loadingUsers() async {
-    await Future.delayed(const Duration(milliseconds: 1000));
+    
+    users = await usersService.getUsers();
+    setState(() {});
+   //await Future.delayed(const Duration(milliseconds: 1000));
     _refreshController.refreshCompleted();
   }
 }
