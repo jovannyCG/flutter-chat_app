@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 class TextInput extends StatelessWidget {
   final IconData icon;
   final String placeholder;
-  final TextEditingController textcontroler;
+  final TextEditingController textController;
   final TextInputType keyboardType;
   final bool isPassword;
   const TextInput(
       {Key? key,
       required this.icon,
       required this.placeholder,
-      required this.textcontroler,
+      required this.textController,
       this.keyboardType = TextInputType.text,
       this.isPassword = false})
       : super(key: key);
@@ -36,7 +36,7 @@ class TextInput extends StatelessWidget {
                 autocorrect: false,
                 keyboardType: keyboardType,
                 obscureText: false,
-                controller: textcontroler,
+                controller: textController,
                 decoration: InputDecoration(
                   prefixIcon: Icon(icon),
                   focusedBorder: InputBorder.none,
