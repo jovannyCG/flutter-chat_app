@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:chat/services/auth_service.dart';
 import 'package:chat/services/chat_service.dart';
+import 'package:chat/services/socket_service.dart';
 import 'package:chat/widgets/chat_message.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +19,9 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
   final _textController = TextEditingController();
   final _textNode = FocusNode();
   bool _isWriting = false;
+  late ChatService chatService;
+  late SocketService socketService;
+  late AuthService authService;
 
   final List<ChatMessages> _messages = [
     //  const ChatMessages(id: '123', text: 'hola', ),
@@ -26,10 +31,16 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
     //  const ChatMessages(id: '123', text: 'hola', ),
     // const ChatMessages(id: '123df', text: 'hola', ),
   ];
+  @override
+  void initState() {
+    chatService = Provider.of<ChatService>(context, listen: false);
+    socketService = Provider.of<SocketService>(context, listen: false);
+    authService= Provider.of<AuthService>(context, listen: false);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final chatService=Provider.of<ChatService>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -39,7 +50,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
           CircleAvatar(
             backgroundColor: Colors.blue[100],
             maxRadius: 14,
-            child:  Text(chatService.userfor.name.substring(0,2),
+            child: Text(chatService.userfor.name.substring(0, 2),
                 style: const TextStyle(
                   fontSize: 12,
                 )),
@@ -146,10 +157,16 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
     setState(() {
       _isWriting = false;
     });
+    socketService.emit('mensaje-personal', {
+      'by': authService.user.id,
+      'for':chatService.userfor.id,
+      'message':text
+    });
   }
+
   @override
   void dispose() {
-    for(ChatMessages message in _messages){
+    for (ChatMessages message in _messages) {
       message.controller.dispose();
     }
     super.dispose();
