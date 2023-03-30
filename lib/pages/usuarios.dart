@@ -1,5 +1,6 @@
 import 'package:chat/models/user.dart';
 import 'package:chat/services/auth_service.dart';
+import 'package:chat/services/chat_service.dart';
 import 'package:chat/services/socket_service.dart';
 import 'package:chat/services/users_service.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class UsersPage extends StatefulWidget {
 
 class _UsersPageState extends State<UsersPage> {
   final usersService = UsersService();
-   List<User> users = [];
+  List<User> users = [];
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
  /* final users = [
@@ -96,6 +97,11 @@ class _UsersPageState extends State<UsersPage> {
             color: user.online ? Colors.green : Colors.red,
             borderRadius: BorderRadius.circular(10)),
       ),
+      onTap: (){
+        final chatService=Provider.of<ChatService>(context, listen: false);
+        chatService.userfor=user;
+        Navigator.pushNamed(context, 'chat');
+      },
     );
   }
 
